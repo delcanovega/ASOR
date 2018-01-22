@@ -1,6 +1,6 @@
 # Ampliación Redes: Práctica 1.1
 
-# Configuración Estática
+## Configuración Estática
 
 **Ejercicio 1 [VM1].** Determinar los interfaces de red que tiene la máquina y las direcciones IP y/o MAC que tienen asignadas. Utilizar el comando `ip`.
 
@@ -18,8 +18,7 @@
 
 | **MAC Origen**    | **MAC Destino**   | **Protocolo** | **IP Origen** | **IP Destino** | **Tipo Mensaje**                 |
 | ----------------- | ----------------- | ------------- | ------------- | -------------- | -------------------------------- |
-| 02:00:00:00:01:00 | 00:00:00:00:00:00 | ARP           | 10.0.0.1      | 10.0.0.2       | Who has 10.0.0.2?
-Tell 10.0.0.1  |
+| 02:00:00:00:01:00 | 00:00:00:00:00:00 | ARP           | 10.0.0.1      | 10.0.0.2       | Who has 10.0.0.2? Tell 10.0.0.1  |
 | 02:00:00:00:02:00 | 02:00:00:00:01:00 | ARP           | 10.0.0.2      | 10.0.0.1       | 10.0.0.2 is at 02:00:00:00:02:00 |
 | 02:00:00:00:01:00 | 02:00:00:00:02:00 | ICMP          | 10.0.0.1      | 10.0.0.2       | ECHO_REQUEST                     |
 | 02:00:00:00:02:00 | 02:00:00:00:01:00 | ICMP          | 10.0.0.2      | 10.0.0.1       | ECHO_REPLY                       |
@@ -50,7 +49,7 @@ Comprobar la conectividad entre Router y VM4; y entre Router, VM1 y VM2.
     root@frontend:~# ip addr add 192.168.0.4/24 dev eth0
     root@frontend:~# ping 192.168.0.3  // REACHABLE
     root@frontend:~# ping 10.0.0.3  // UNREACHABLE
-# Encaminamiento Estático
+## Encaminamiento Estático
 
 **Ejercicio 1 [Router].** Activar el reenvío de paquetes *(forwarding)* en Router para que efectivamente pueda funcionar como encaminador entre las redes `10.0.0.0/24` y `192.168.0.0/24`. Ejecutar el comando `# sysctl net.ipv4.ip_forward=1`.
 
@@ -88,7 +87,7 @@ herramienta **wireshark** completar la siguiente tabla para todos los paquetes i
 
 
 
-# Configuración Dinámica de Hosts
+## Configuración Dinámica de Hosts
 
 **Ejercicio 1 [VM1, VM2, VM4].** Eliminar las direcciones de red de los interfaces `ip addr del`.
 
@@ -98,18 +97,17 @@ herramienta **wireshark** completar la siguiente tabla para todos los paquetes i
 
 **Ejercicio 2 [Router].** Configurar el **servidor DHCP** para las dos redes:
 
-| `/etc/dhcp/dhcpd.conf`                                                                                                                                                                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| subnet 10.0.0.0 netmask 255.255.255.0 {
-    range 10.0.0.50 10.0.0.100;
-    option routers 10.0.0.3;
-    option broadcast-address 10.0.0.255;
-}
-subnet 192.168.0.0 netmask 255.255.255.0 {
-    range 192.168.0.50 192.168.0.100;
-    option routers 192.168.0.3;
-    option broadcast-address 192.168.0.255;
-} |
+    # /etc/dhcp/dhcpd.conf
+    subnet 10.0.0.0 netmask 255.255.255.0 {
+        range 10.0.0.50 10.0.0.100;
+        option routers 10.0.0.3;
+        option broadcast-address 10.0.0.255;
+    }
+    subnet 192.168.0.0 netmask 255.255.255.0 {
+        range 192.168.0.50 192.168.0.100;
+        option routers 192.168.0.3;
+        option broadcast-address 192.168.0.255;
+    }
 
 ***VM3:***
 
